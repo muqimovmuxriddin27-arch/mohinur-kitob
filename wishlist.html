@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="uz"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Istaklarim – Mohinur Print</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head><body>
+<header id="header"><div class="container header-inner">
+  <a href="index.html" class="logo"><span class="logo-icon">📚</span><div><span class="logo-name">Mohinur Print</span><span class="logo-sub">Kitob do'koni</span></div></a>
+  <nav class="nav-links" id="navLinks"><a href="index.html">Bosh sahifa</a><a href="catalog.html">Katalog</a><a href="about.html">Haqimizda</a><a href="contact.html">Aloqa</a></nav>
+  <div class="header-actions"><a href="wishlist.html" class="icon-btn active">♡ <span id="wishCount">0</span></a><a href="cart.html" class="icon-btn cart-btn">🛒 <span id="cartCount">0</span></a><button class="hamburger" onclick="toggleMenu()">☰</button></div>
+</div></header>
+
+<div class="page-banner"><div class="container"><h1>❤️ Istaklarim</h1></div></div>
+
+<div class="container" style="margin-top:2rem;margin-bottom:4rem">
+  <div class="books-grid" id="wishGrid"></div>
+</div>
+
+<footer><div class="container footer-inner"><div class="footer-col"><h4>📚 Mohinur Print</h4></div><div class="footer-col"><h4>Sahifalar</h4><a href="index.html">Bosh sahifa</a><a href="catalog.html">Katalog</a></div><div class="footer-col"><h4>Bog'lanish</h4><p>📞 +998 73 XXX-XX-XX</p></div></div><div class="footer-bottom"><p>© 2026 Mohinur Print MCHJ.</p></div></footer>
+
+<div id="cartToast" class="toast">✅ Savatga qo'shildi!</div>
+<div id="wishToast" class="toast">❤️ Istaklarga qo'shildi!</div>
+
+<script src="data.js"></script><script src="app.js"></script>
+<script>
+const wish = getWish();
+const wishBooks = books.filter(b=>wish.includes(b.id));
+const el = document.getElementById('wishGrid');
+if(wishBooks.length) el.innerHTML = wishBooks.map(bookCard).join('');
+else el.innerHTML = '<div class="empty-state"><p style="font-size:3rem">♡</p><h2>Istaklarim bo\'sh</h2><p>Yoqtirgan kitoblarni istaklarga qo\'shing</p><a href="catalog.html" class="btn-primary" style="display:inline-block;margin-top:1rem">Katalogga o\'tish</a></div>';
+updateCounts();
+</script></body></html>

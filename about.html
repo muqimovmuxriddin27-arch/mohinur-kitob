@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="uz"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haqimizda – Mohinur Print</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head><body>
+<header id="header"><div class="container header-inner">
+  <a href="index.html" class="logo"><span class="logo-icon">📚</span><div><span class="logo-name">Mohinur Print</span><span class="logo-sub">Kitob do'koni</span></div></a>
+  <nav class="nav-links" id="navLinks"><a href="index.html">Bosh sahifa</a><a href="catalog.html">Katalog</a><a href="about.html" class="active">Haqimizda</a><a href="contact.html">Aloqa</a></nav>
+  <div class="header-actions"><a href="wishlist.html" class="icon-btn">♡ <span id="wishCount">0</span></a><a href="cart.html" class="icon-btn cart-btn">🛒 <span id="cartCount">0</span></a><button class="hamburger" onclick="toggleMenu()">☰</button></div>
+</div></header>
+
+<div class="page-banner"><div class="container"><h1>Biz haqimizda</h1><p>Farg'onadagi eng ishonchli kitob do'koni</p></div></div>
+
+<div class="container" style="padding:3rem 1rem 4rem">
+  <div class="about-grid">
+    <div>
+      <h2>Mohinur Print MCHJ</h2>
+      <p>«Mohinur Print» MCHJ – Farg'ona viloyatida faoliyat yurituvchi kitob savdosi kompaniyasi. Biz yillar davomida oflayn do'kon orqali kitobsevar mijozlarimizga xizmat ko'rsatib kelmoqdamiz.</p>
+      <p>2026-yildan boshlab biz onlayn savdoni yo'lga qo'ydik – endi O'zbekistonning istalgan nuqtasidan bizning saytimiz orqali kitob buyurtma qilishingiz mumkin.</p>
+      <h3 style="margin-top:2rem">Bizning qadriyatlarimiz</h3>
+      <ul class="about-list">
+        <li>📚 Keng assortiment – 5000+ kitob</li>
+        <li>✅ Sifat kafolati – faqat original kitoblar</li>
+        <li>🚚 Tez yetkazib berish – Farg'onada 1-2 kun</li>
+        <li>💳 Qulay to'lov – Click, Payme, naqd</li>
+        <li>🤝 Mijozlarga yaxshi xizmat</li>
+      </ul>
+    </div>
+    <div>
+      <div class="about-stats">
+        <div class="about-stat"><strong>5000+</strong><span>Kitob assortimenti</span></div>
+        <div class="about-stat"><strong>10 yil+</strong><span>Bozordagi tajriba</span></div>
+        <div class="about-stat"><strong>10000+</strong><span>Mamnun mijozlar</span></div>
+        <div class="about-stat"><strong>O'zbekiston</strong><span>Yetkazib berish hududi</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer><div class="container footer-inner"><div class="footer-col"><h4>📚 Mohinur Print</h4></div><div class="footer-col"><h4>Sahifalar</h4><a href="index.html">Bosh sahifa</a><a href="catalog.html">Katalog</a></div><div class="footer-col"><h4>Bog'lanish</h4><p>📞 +998 73 XXX-XX-XX</p></div></div><div class="footer-bottom"><p>© 2026 Mohinur Print MCHJ.</p></div></footer>
+<script src="data.js"></script><script src="app.js"></script><script>updateCounts();</script>
+</body></html>

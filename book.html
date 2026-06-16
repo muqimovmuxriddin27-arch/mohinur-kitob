@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kitob – Mohinur Print</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo"><span class="logo-icon">📚</span><div><span class="logo-name">Mohinur Print</span><span class="logo-sub">Kitob do'koni</span></div></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Bosh sahifa</a><a href="catalog.html" class="active">Katalog</a><a href="about.html">Haqimizda</a><a href="contact.html">Aloqa</a>
+    </nav>
+    <div class="header-actions">
+      <div class="search-box"><input type="text" id="searchInput" placeholder="Kitob qidirish..." autocomplete="off"><button onclick="doSearch()">🔍</button><div class="search-dropdown" id="searchDropdown"></div></div>
+      <a href="wishlist.html" class="icon-btn">♡ <span id="wishCount">0</span></a>
+      <a href="cart.html" class="icon-btn cart-btn">🛒 <span id="cartCount">0</span></a>
+      <button class="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+  </div>
+</header>
+
+<div class="container" style="padding-top:100px">
+  <div class="breadcrumb"><a href="index.html">Bosh sahifa</a> › <a href="catalog.html">Katalog</a> › <span id="bcTitle">Kitob</span></div>
+</div>
+
+<div class="container book-detail" id="bookDetail">
+  <p>Yuklanmoqda...</p>
+</div>
+
+<section class="section">
+  <div class="container">
+    <h2 style="margin-bottom:1.5rem">O'xshash kitoblar</h2>
+    <div class="books-grid" id="similarBooks"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-col"><h4>📚 Mohinur Print</h4><p>Farg'onadagi eng yirik onlayn kitob do'koni.</p></div>
+    <div class="footer-col"><h4>Sahifalar</h4><a href="index.html">Bosh sahifa</a><a href="catalog.html">Katalog</a><a href="about.html">Haqimizda</a><a href="contact.html">Aloqa</a></div>
+    <div class="footer-col"><h4>Bog'lanish</h4><p>📍 Farg'ona shahari</p><p>📞 +998 73 XXX-XX-XX</p><p>✉️ info@mohinurprint.uz</p></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 Mohinur Print MCHJ.</p></div>
+</footer>
+
+<div id="cartToast" class="toast">✅ Savatga qo'shildi!</div>
+<div id="wishToast" class="toast">❤️ Istaklarga qo'shildi!</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+const id = parseInt(new URLSearchParams(location.search).get('id'));
+const book = books.find(b=>b.id===id);
+
+if(book) {
+  document.title = book.title + ' – Mohinur Print';
+  document.getElementById('bcTitle').textContent = book.title;
+  const disc = book.discount ? `<span class="badge-disc">-${book.discount}%</span>` : '';
+  const oldPrice = book.discount ? `<span class="old-price">${formatPrice(Math.round(book.price/(1-book.discount/100)))} so'm</span>` : '';
+  const stars = '★'.repeat(book.rating||4) + '☆'.repeat(5-(book.rating||4));
+
+  document.getElementById('bookDetail').innerHTML = `
+    <div class="book-detail-grid">
+      <div class="book-detail-img">
+        <div class="book-cover-big" style="background:${book.color||'#4a90d9'}">
+          <span>${book.emoji||'📖'}</span>
+          <div class="book-cover-title">${book.title}</div>
+        </div>
+        ${disc}
+      </div>
+      <div class="book-detail-info">
+        <div class="book-category-tag">${catName(book.category)}</div>
+        <h1>${book.title}</h1>
+        <p class="book-author">✍️ ${book.author}</p>
+        <div class="book-rating">${stars} <span>(${(book.reviews||Math.floor(Math.random()*50+10))} sharh)</span></div>
+        <div class="book-price-block">
+          <span class="price-main">${formatPrice(book.price)} so'm</span>
+          ${oldPrice}
+        </div>
+        <div class="book-meta">
+          <div class="meta-item"><span>📅 Yil:</span><strong>${book.year||2023}</strong></div>
+          <div class="meta-item"><span>🌐 Til:</span><strong>${langName(book.lang)}</strong></div>
+          <div class="meta-item"><span>📄 Sahifalar:</span><strong>${book.pages||200}</strong></div>
+          <div class="meta-item"><span>📦 Holati:</span><strong style="color:${book.stock>0?'#27ae60':'#e74c3c'}">${book.stock>0?'Mavjud':'Tugagan'}</strong></div>
+        </div>
+        <p class="book-desc">${book.desc}</p>
+        <div class="book-actions">
+          <div class="qty-ctrl">
+            <button onclick="changeQty(-1)">−</button>
+            <span id="qtyVal">1</span>
+            <button onclick="changeQty(1)">+</button>
+          </div>
+          <button class="btn-primary" onclick="addToCartById(${book.id})" ${book.stock===0?'disabled':''}>
+            ${book.stock>0?'🛒 Savatga qo\'shish':'Mavjud emas'}
+          </button>
+          <button class="btn-wish" onclick="toggleWish(${book.id})" id="wishBtn">♡</button>
+        </div>
+        <div class="delivery-info">
+          <p>🚚 <strong>Yetkazib berish:</strong> Farg'ona bo'ylab 1-2 kun, boshqa viloyatlar 3-5 kun</p>
+          <p>💳 <strong>To'lov:</strong> Click, Payme yoki naqd pul</p>
+        </div>
+      </div>
+    </div>`;
+
+  // Similar books
+  const similar = books.filter(b=>b.category===book.category && b.id!==book.id).slice(0,4);
+  document.getElementById('similarBooks').innerHTML = similar.map(bookCard).join('');
+
+  // Update wish btn
+  updateWishBtn();
+} else {
+  document.getElementById('bookDetail').innerHTML = '<p>Kitob topilmadi. <a href="catalog.html">Katalogga qaytish</a></p>';
+}
+
+let qty = 1;
+function changeQty(d) {
+  qty = Math.max(1, qty+d);
+  document.getElementById('qtyVal').textContent = qty;
+}
+
+function addToCartById(id) {
+  const b = books.find(x=>x.id===id);
+  if(!b) return;
+  const cart = getCart();
+  const ex = cart.find(x=>x.id===id);
+  if(ex) ex.qty += qty; else cart.push({...b, qty});
+  saveCart(cart);
+  updateCounts();
+  showToast('cartToast');
+}
+
+function updateWishBtn() {
+  const wish = getWish();
+  const btn = document.getElementById('wishBtn');
+  if(btn) btn.textContent = wish.includes(id) ? '❤️' : '♡';
+}
+
+function toggleWish(id) {
+  let wish = getWish();
+  if(wish.includes(id)) wish = wish.filter(x=>x!==id);
+  else { wish.push(id); showToast('wishToast'); }
+  localStorage.setItem('wish', JSON.stringify(wish));
+  updateWishBtn();
+  updateCounts();
+}
+
+updateCounts();
+</script>
+</body>
+</html>

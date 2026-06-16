@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Katalog – Mohinur Print</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">📚</span>
+      <div><span class="logo-name">Mohinur Print</span><span class="logo-sub">Kitob do'koni</span></div>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Bosh sahifa</a>
+      <a href="catalog.html" class="active">Katalog</a>
+      <a href="about.html">Haqimizda</a>
+      <a href="contact.html">Aloqa</a>
+    </nav>
+    <div class="header-actions">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Kitob qidirish..." autocomplete="off">
+        <button onclick="doSearch()">🔍</button>
+        <div class="search-dropdown" id="searchDropdown"></div>
+      </div>
+      <a href="wishlist.html" class="icon-btn">♡ <span id="wishCount">0</span></a>
+      <a href="cart.html" class="icon-btn cart-btn">🛒 <span id="cartCount">0</span></a>
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+  </div>
+</header>
+
+<div class="page-banner">
+  <div class="container">
+    <h1>Kitoblar katalogi</h1>
+    <p>5000+ kitob – barcha janr va yo'nalishlar</p>
+  </div>
+</div>
+
+<div class="container catalog-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="filter-box">
+      <h3>Kategoriya</h3>
+      <label class="filter-item"><input type="radio" name="cat" value="all" checked onchange="applyFilters()"> Hammasi</label>
+      <label class="filter-item"><input type="radio" name="cat" value="badiiy" onchange="applyFilters()"> 📖 Badiiy adabiyot</label>
+      <label class="filter-item"><input type="radio" name="cat" value="ilmiy" onchange="applyFilters()"> 🔬 Ilmiy adabiyot</label>
+      <label class="filter-item"><input type="radio" name="cat" value="bolalar" onchange="applyFilters()"> 🌈 Bolalar adabiyoti</label>
+      <label class="filter-item"><input type="radio" name="cat" value="tarix" onchange="applyFilters()"> 🏛️ Tarix & Falsafa</label>
+      <label class="filter-item"><input type="radio" name="cat" value="biznes" onchange="applyFilters()"> 💼 Biznes</label>
+      <label class="filter-item"><input type="radio" name="cat" value="chet" onchange="applyFilters()"> 🌍 Chet til</label>
+    </div>
+
+    <div class="filter-box">
+      <h3>Narx (so'm)</h3>
+      <div class="price-inputs">
+        <input type="number" id="minPrice" placeholder="Min" value="0" onchange="applyFilters()">
+        <span>–</span>
+        <input type="number" id="maxPrice" placeholder="Max" value="500000" onchange="applyFilters()">
+      </div>
+    </div>
+
+    <div class="filter-box">
+      <h3>Til</h3>
+      <label class="filter-item"><input type="checkbox" value="uz" checked onchange="applyFilters()" class="lang-filter"> O'zbek tili</label>
+      <label class="filter-item"><input type="checkbox" value="ru" checked onchange="applyFilters()" class="lang-filter"> Rus tili</label>
+      <label class="filter-item"><input type="checkbox" value="en" checked onchange="applyFilters()" class="lang-filter"> Ingliz tili</label>
+    </div>
+
+    <div class="filter-box">
+      <h3>Holati</h3>
+      <label class="filter-item"><input type="checkbox" id="inStockOnly" onchange="applyFilters()"> Faqat mavjud</label>
+      <label class="filter-item"><input type="checkbox" id="discountOnly" onchange="applyFilters()"> Chegirmali</label>
+    </div>
+
+    <button class="btn-reset" onclick="resetFilters()">Filtrlarni tozalash</button>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="catalog-main">
+    <div class="catalog-toolbar">
+      <span id="resultCount">Yuklanmoqda...</span>
+      <select id="sortSelect" onchange="applyFilters()">
+        <option value="popular">Eng ommabop</option>
+        <option value="new">Yangi</option>
+        <option value="price_asc">Narx: past → yuqori</option>
+        <option value="price_desc">Narx: yuqori → past</option>
+        <option value="name">Nomi bo'yicha</option>
+      </select>
+    </div>
+    <div class="books-grid" id="catalogGrid"></div>
+    <div class="pagination" id="pagination"></div>
+  </main>
+</div>
+
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-col"><h4>📚 Mohinur Print</h4><p>Farg'onadagi eng yirik onlayn kitob do'koni.</p></div>
+    <div class="footer-col"><h4>Sahifalar</h4><a href="index.html">Bosh sahifa</a><a href="catalog.html">Katalog</a><a href="about.html">Haqimizda</a><a href="contact.html">Aloqa</a></div>
+    <div class="footer-col"><h4>Bog'lanish</h4><p>📍 Farg'ona shahari</p><p>📞 +998 73 XXX-XX-XX</p><p>✉️ info@mohinurprint.uz</p></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 Mohinur Print MCHJ.</p></div>
+</footer>
+
+<div id="cartToast" class="toast">✅ Savatga qo'shildi!</div>
+<div id="wishToast" class="toast">❤️ Istaklarga qo'shildi!</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+let currentPage = 1;
+const perPage = 12;
+
+function applyFilters() {
+  currentPage = 1;
+  renderCatalog();
+}
+
+function renderCatalog() {
+  const cat = document.querySelector('input[name="cat"]:checked').value;
+  const minP = parseInt(document.getElementById('minPrice').value)||0;
+  const maxP = parseInt(document.getElementById('maxPrice').value)||999999;
+  const langs = [...document.querySelectorAll('.lang-filter:checked')].map(x=>x.value);
+  const inStock = document.getElementById('inStockOnly').checked;
+  const discountOnly = document.getElementById('discountOnly').checked;
+  const sort = document.getElementById('sortSelect').value;
+
+  let filtered = books.filter(b => {
+    if(cat !== 'all' && b.category !== cat) return false;
+    if(b.price < minP || b.price > maxP) return false;
+    if(!langs.includes(b.lang)) return false;
+    if(inStock && b.stock === 0) return false;
+    if(discountOnly && !b.discount) return false;
+    return true;
+  });
+
+  if(sort === 'new') filtered.sort((a,b)=>b.id-a.id);
+  else if(sort === 'price_asc') filtered.sort((a,b)=>a.price-b.price);
+  else if(sort === 'price_desc') filtered.sort((a,b)=>b.price-a.price);
+  else if(sort === 'name') filtered.sort((a,b)=>a.title.localeCompare(b.title));
+  else filtered.sort((a,b)=>(b.sales||0)-(a.sales||0));
+
+  document.getElementById('resultCount').textContent = `${filtered.length} ta kitob topildi`;
+
+  const total = filtered.length;
+  const totalPages = Math.ceil(total/perPage);
+  const paged = filtered.slice((currentPage-1)*perPage, currentPage*perPage);
+
+  document.getElementById('catalogGrid').innerHTML = paged.length ? paged.map(bookCard).join('') : '<p class="no-results">Kitob topilmadi 😔</p>';
+
+  // Pagination
+  let pgHtml = '';
+  for(let i=1;i<=totalPages;i++) {
+    pgHtml += `<button class="pg-btn${i===currentPage?' active':''}" onclick="goPage(${i})">${i}</button>`;
+  }
+  document.getElementById('pagination').innerHTML = pgHtml;
+}
+
+function goPage(n) { currentPage=n; renderCatalog(); window.scrollTo(0,300); }
+
+function resetFilters() {
+  document.querySelector('input[name="cat"][value="all"]').checked=true;
+  document.getElementById('minPrice').value=0;
+  document.getElementById('maxPrice').value=500000;
+  document.querySelectorAll('.lang-filter').forEach(x=>x.checked=true);
+  document.getElementById('inStockOnly').checked=false;
+  document.getElementById('discountOnly').checked=false;
+  applyFilters();
+}
+
+// URL param for category
+const urlCat = new URLSearchParams(location.search).get('cat');
+if(urlCat) {
+  const radio = document.querySelector(`input[name="cat"][value="${urlCat}"]`);
+  if(radio) radio.checked=true;
+}
+const urlSort = new URLSearchParams(location.search).get('sort');
+if(urlSort) document.getElementById('sortSelect').value = urlSort==='popular'?'popular':'new';
+
+renderCatalog();
+updateCounts();
+</script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohinur Print – Onlayn Kitob Do'koni</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">📚</span>
+      <div>
+        <span class="logo-name">Mohinur Print</span>
+        <span class="logo-sub">Kitob do'koni</span>
+      </div>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html" class="active">Bosh sahifa</a>
+      <a href="catalog.html">Katalog</a>
+      <a href="about.html">Haqimizda</a>
+      <a href="contact.html">Aloqa</a>
+    </nav>
+    <div class="header-actions">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Kitob qidirish..." autocomplete="off">
+        <button onclick="doSearch()">🔍</button>
+        <div class="search-dropdown" id="searchDropdown"></div>
+      </div>
+      <a href="wishlist.html" class="icon-btn" title="Istaklarim">
+        ♡ <span id="wishCount">0</span>
+      </a>
+      <a href="cart.html" class="icon-btn cart-btn" title="Savat">
+        🛒 <span id="cartCount">0</span>
+      </a>
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="container hero-content">
+    <div class="hero-text">
+      <p class="hero-tag">Farg'onalik kitobsevarlar uchun</p>
+      <h1>Bilim – eng<br><span>qimmatli boylik</span></h1>
+      <p class="hero-desc">O'zbekiston bo'ylab yetkazib berish bilan 5000+ kitob. Badiiy, ilmiy, bolalar adabiyoti – hammasi bir joyda.</p>
+      <div class="hero-btns">
+        <a href="catalog.html" class="btn-primary">Kitoblarni ko'rish</a>
+        <a href="#categories" class="btn-outline">Kategoriyalar</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="book-stack">
+        <div class="book b1">📖</div>
+        <div class="book b2">📕</div>
+        <div class="book b3">📗</div>
+        <div class="book b4">📘</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><strong>5000+</strong><span>Kitob</span></div>
+    <div class="stat"><strong>500+</strong><span>Muallif</span></div>
+    <div class="stat"><strong>10000+</strong><span>Mijoz</span></div>
+    <div class="stat"><strong>24/7</strong><span>Buyurtma</span></div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section id="categories" class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Kategoriyalar</h2>
+      <a href="catalog.html" class="see-all">Hammasini ko'rish →</a>
+    </div>
+    <div class="categories-grid">
+      <a href="catalog.html?cat=badiiy" class="cat-card" style="--c:#e8f4fd">
+        <span class="cat-icon">📖</span>
+        <span class="cat-name">Badiiy adabiyot</span>
+        <span class="cat-count">1200+ kitob</span>
+      </a>
+      <a href="catalog.html?cat=ilmiy" class="cat-card" style="--c:#fef9e7">
+        <span class="cat-icon">🔬</span>
+        <span class="cat-name">Ilmiy adabiyot</span>
+        <span class="cat-count">800+ kitob</span>
+      </a>
+      <a href="catalog.html?cat=bolalar" class="cat-card" style="--c:#fdebd0">
+        <span class="cat-icon">🌈</span>
+        <span class="cat-name">Bolalar adabiyoti</span>
+        <span class="cat-count">600+ kitob</span>
+      </a>
+      <a href="catalog.html?cat=tarix" class="cat-card" style="--c:#e8f8f5">
+        <span class="cat-icon">🏛️</span>
+        <span class="cat-name">Tarix & Falsafa</span>
+        <span class="cat-count">450+ kitob</span>
+      </a>
+      <a href="catalog.html?cat=biznes" class="cat-card" style="--c:#f3e5f5">
+        <span class="cat-icon">💼</span>
+        <span class="cat-name">Biznes & Iqtisodiyot</span>
+        <span class="cat-count">380+ kitob</span>
+      </a>
+      <a href="catalog.html?cat=chet" class="cat-card" style="--c:#fce4ec">
+        <span class="cat-icon">🌍</span>
+        <span class="cat-name">Chet til kitoblari</span>
+        <span class="cat-count">700+ kitob</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- BESTSELLERS -->
+<section class="section bg-light">
+  <div class="container">
+    <div class="section-head">
+      <h2>Bestseller kitoblar</h2>
+      <a href="catalog.html?sort=popular" class="see-all">Barchasini ko'rish →</a>
+    </div>
+    <div class="books-grid" id="bestsellers"></div>
+  </div>
+</section>
+
+<!-- NEW ARRIVALS -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Yangi kitoblar</h2>
+      <a href="catalog.html?sort=new" class="see-all">Barchasini ko'rish →</a>
+    </div>
+    <div class="books-grid" id="newArrivals"></div>
+  </div>
+</section>
+
+<!-- BANNER -->
+<section class="promo-banner">
+  <div class="container">
+    <div class="promo-inner">
+      <div>
+        <h3>📦 Bepul yetkazib berish</h3>
+        <p>100 000 so'mdan yuqori xaridlarda Farg'ona shahri bo'ylab bepul yetkazib berish</p>
+      </div>
+      <div>
+        <h3>💳 Qulay to'lov</h3>
+        <p>Click va Payme orqali onlayn to'lov yoki naqd pul</p>
+      </div>
+      <div>
+        <h3>📚 Keng assortiment</h3>
+        <p>5000+ kitob. Har kuni yangi kitoblar qo'shiladi</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-col">
+      <h4>📚 Mohinur Print</h4>
+      <p>Farg'onadagi eng yirik onlayn kitob do'koni. Bilim va ma'rifat uchun xizmat qilamiz.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Sahifalar</h4>
+      <a href="index.html">Bosh sahifa</a>
+      <a href="catalog.html">Katalog</a>
+      <a href="about.html">Haqimizda</a>
+      <a href="contact.html">Aloqa</a>
+    </div>
+    <div class="footer-col">
+      <h4>Bog'lanish</h4>
+      <p>📍 Farg'ona shahari</p>
+      <p>📞 +998 73 XXX-XX-XX</p>
+      <p>✉️ info@mohinurprint.uz</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Mohinur Print MCHJ. Barcha huquqlar himoyalangan.</p>
+  </div>
+</footer>
+
+<div id="cartToast" class="toast">✅ Savatga qo'shildi!</div>
+<div id="wishToast" class="toast">❤️ Istaklarga qo'shildi!</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+  // Render bestsellers
+  const bsEl = document.getElementById('bestsellers');
+  const bestsellers = books.filter(b=>b.bestseller).slice(0,4);
+  bsEl.innerHTML = bestsellers.map(bookCard).join('');
+
+  // Render new arrivals
+  const naEl = document.getElementById('newArrivals');
+  const newBooks = books.filter(b=>b.isNew).slice(0,4);
+  naEl.innerHTML = newBooks.map(bookCard).join('');
+
+  updateCounts();
+</script>
+</body>
+</html>
